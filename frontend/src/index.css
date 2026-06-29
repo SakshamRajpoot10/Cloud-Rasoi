@@ -56,6 +56,14 @@
   --shadow-xl-2: rgba(0, 0, 0, 0.16) -14px 10px 49px 0px;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 100px;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

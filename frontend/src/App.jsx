@@ -400,6 +400,19 @@ export default function App() {
     }
   }, []);
 
+  // Handle smooth scroll on hash changes or view changes
+  useEffect(() => {
+    if (currentView === 'home' && window.location.hash) {
+      const id = window.location.hash.substring(1);
+      const element = document.getElementById(id);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [currentView]);
+
   // Fetch User Addresses when Logged In
   useEffect(() => {
     if (currentUser) {
@@ -831,7 +844,17 @@ export default function App() {
       {/* --- Unified Header & Navigation --- */}
       {/* --- Unified Header & Navigation --- */}
       <nav className="navbar">
-        <div className="logo-container" onClick={() => { setCurrentView('home'); setSelectedRestaurant(null); }} style={{ cursor: 'pointer' }}>
+        <div className="logo-container" onClick={() => {
+          if (currentView === 'home') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            setCurrentView('home');
+            setSelectedRestaurant(null);
+            setTimeout(() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 50);
+          }
+        }} style={{ cursor: 'pointer' }}>
           <span className="logo-emoji-brand" style={{ fontSize: '28px', marginRight: '8px' }}>🍲</span>
           <span className="logo-text-brand" style={{ fontFamily: 'var(--font-display)', fontSize: '32px', letterSpacing: '0.05em', color: 'var(--color-deep-indigo)' }}>
             Cloud Rasoi
