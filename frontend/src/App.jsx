@@ -63,7 +63,7 @@ const MagneticButton = ({ children, className, onClick }) => {
 };
 
 // --- Floating Element Component (Parallax + Floating Physics) ---
-const FloatingElement = ({ src, style, speedX = 0.5, speedY = 0.5 }) => {
+const FloatingElement = ({ src, children, style, speedX = 0.5, speedY = 0.5 }) => {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -98,13 +98,17 @@ const FloatingElement = ({ src, style, speedX = 0.5, speedY = 0.5 }) => {
   }, [speedX, speedY]);
 
   return (
-    <img 
+    <div 
       ref={ref} 
-      src={src} 
       className="floating-element" 
-      style={{ ...style, transition: 'transform 0.1s ease-out' }} 
-      alt="Floating ingredient"
-    />
+      style={{ ...style, transition: 'transform 0.1s ease-out', position: 'absolute' }}
+    >
+      {src ? (
+        <img src={src} style={{ width: '100%', height: '100%', display: 'block' }} alt="Floating ingredient" />
+      ) : (
+        children
+      )}
+    </div>
   );
 };
 
@@ -1098,8 +1102,44 @@ export default function App() {
             </header>
 
             {/* --- Intro Section --- */}
-            <section id="about" className="intro-section">
+            <section id="about" className="intro-section" style={{ position: 'relative', zIndex: 10 }}>
+              {/* Overlapping Knife & Vegetables Drawing (top-left, overlapping with header/hero) */}
+              <FloatingElement style={{ top: '-90px', left: '8%', width: '130px', height: '130px', zIndex: 12 }} speedX={0.6} speedY={0.6}>
+                <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%', color: 'var(--color-deep-indigo)' }}>
+                  <path d="M15,65 Q35,60 55,68 T85,55 Q82,45 60,48 Z" stroke="#ed7328" strokeWidth="2.5" fill="none" />
+                  <path d="M85,55 C90,52 92,57 95,54 M85,55 C88,60 92,62 94,65 M85,55 C92,52 88,47 90,42" stroke="var(--color-deep-indigo)" strokeWidth="2" />
+                  <path d="M40,15 L62,38 L45,55 L35,55 L25,45 Z" stroke="#000" strokeWidth="2" fill="rgba(0,0,0,0.05)" />
+                  <path d="M62,38 L78,22 C80,20 84,20 86,22 C88,24 88,28 86,30 L70,46" stroke="#000" strokeWidth="2.5" />
+                  <path d="M10,75 L90,75" stroke="#ccc" strokeDasharray="4 4" />
+                  <circle cx="28" cy="40" r="3" fill="#ed7328" />
+                  <circle cx="38" cy="35" r="4" fill="#ed7328" />
+                  <circle cx="48" cy="45" r="3" fill="#ed7328" />
+                </svg>
+              </FloatingElement>
+
+              {/* Overlapping Burger Drawing (bottom-right, overlapping with products section) */}
+              <FloatingElement style={{ bottom: '-95px', right: '8%', width: '120px', height: '120px', zIndex: 12 }} speedX={0.5} speedY={0.5}>
+                <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%', color: 'var(--color-deep-indigo)' }}>
+                  <path d="M15,45 C15,20 85,20 85,45 Z" fill="rgba(210, 182, 140, 0.1)" stroke="currentColor" strokeWidth="2.5" />
+                  <path d="M35,28 Q36,28 35,30 M50,23 Q51,23 50,25 M65,28 Q66,28 65,30" stroke="currentColor" strokeWidth="2" />
+                  <path d="M10,48 Q15,53 20,48 T30,48 T40,48 T50,48 T60,48 T70,48 T80,48 T90,48" stroke="#24963f" strokeWidth="2" />
+                  <path d="M15,53 L85,53 L75,60 L65,53 Z" fill="var(--color-honey-gold)" stroke="var(--color-honey-gold)" strokeWidth="2" />
+                  <rect x="12" y="58" width="76" height="8" rx="4" fill="rgba(100, 50, 20, 0.1)" stroke="currentColor" strokeWidth="2.5" />
+                  <path d="M15,70 L85,70 C85,78 15,78 15,70 Z" fill="rgba(210, 182, 140, 0.1)" stroke="currentColor" stroke-width="2.5" />
+                </svg>
+              </FloatingElement>
+
+              {/* Floating Organic Leaf Decoration (center-right) */}
+              <FloatingElement style={{ top: '30%', right: '18%', width: '35px', height: '35px', opacity: 0.7 }} speedX={0.4} speedY={0.2}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="#24963f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: '100%', height: '100%' }}>
+                  <path d="M2 22C2 12 10 4 22 2" />
+                  <path d="M22 2c-10 0-18 8-20 20" />
+                  <path d="M2 22l10-10" />
+                </svg>
+              </FloatingElement>
+
               <FloatingElement src="/assets/lactose-free.svg" style={{ top: '15%', left: '15%', width: '45px' }} speedX={0.3} speedY={0.3} />
+              
               <div className="container">
                 <div className="intro-content">
                   <p className="intro-text">
