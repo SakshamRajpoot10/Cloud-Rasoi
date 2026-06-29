@@ -43,29 +43,13 @@ const AnimatedWave = ({ className, pathClass, fill, baseHeight = 60, amplitude =
   );
 };
 
-// --- Magnetic Button Component ---
+// --- Magnetic Button Component (Replaced with Premium Zoom Hover) ---
 const MagneticButton = ({ children, className, onClick }) => {
-  const ref = useRef(null);
-  
-  const handleMouseMove = (e) => {
-    const { clientX, clientY } = e;
-    const { left, top, width, height } = ref.current.getBoundingClientRect();
-    const x = clientX - (left + width / 2);
-    const y = clientY - (top + height / 2);
-    ref.current.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-  };
-
-  const handleMouseLeave = () => {
-    ref.current.style.transform = 'translate(0px, 0px)';
-  };
-
   return (
     <div 
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="magnetic-btn"
+      className={`normal-zoom-btn ${className || ''}`}
       onClick={onClick}
+      style={{ display: 'inline-block', cursor: 'pointer' }}
     >
       {children}
     </div>

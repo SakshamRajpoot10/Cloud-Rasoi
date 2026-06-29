@@ -36,6 +36,7 @@
   --spacing-8: 8px;
   --spacing-12: 12px;
   --spacing-16: 16px;
+  --spacing-20: 20px;
   --spacing-24: 24px;
   --spacing-32: 32px;
   --spacing-40: 40px;
@@ -1346,8 +1347,8 @@ a {
   left: var(--spacing-12);
   background-color: var(--color-primary);
   color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 6px 12px;
+  border-radius: 6px;
   font-family: var(--font-ui);
   font-size: 11px;
   font-weight: 700;
@@ -1361,8 +1362,8 @@ a {
   right: var(--spacing-12);
   background-color: rgba(255, 255, 255, 0.95);
   color: var(--color-text);
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 6px 12px;
+  border-radius: 6px;
   font-family: var(--font-ui);
   font-size: 11px;
   font-weight: 600;
@@ -1391,8 +1392,8 @@ a {
 .rating-badge {
   background-color: #24963f;
   color: white;
-  padding: 2px 6px;
-  border-radius: 4px;
+  padding: 4px 8px;
+  border-radius: 6px;
   font-size: 12px;
   font-weight: 700;
   display: flex;
@@ -1412,7 +1413,8 @@ a {
   display: flex;
   justify-content: space-between;
   border-top: 1px solid var(--color-border);
-  padding-top: var(--spacing-12);
+  padding-top: var(--spacing-16);
+  margin-top: var(--spacing-4);
   font-size: 12px;
   color: var(--color-text-light);
 }
@@ -3378,4 +3380,66 @@ a {
   .header-location-selector {
     padding: 6px 10px !important;
   }
+}
+
+/* Universal Premium Zoom Hover for Buttons */
+button,
+.btn-filled-indigo,
+.btn-outline-orange,
+.btn-white,
+.btn-submit-landing,
+.btn-subscribe,
+.btn-place-order,
+.btn-pay-now,
+.btn-track-order-success,
+.btn-auth-submit,
+.btn-view-orders,
+.btn-save-profile,
+.btn-track-active,
+.btn-reorder,
+.btn-close-tracking-full,
+.btn-add-brand-product-to-cart,
+.normal-zoom-btn {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s, color 0.2s, box-shadow 0.25s !important;
+}
+
+button:hover,
+.btn-filled-indigo:hover,
+.btn-outline-orange:hover,
+.btn-white:hover,
+.btn-submit-landing:hover,
+.btn-subscribe:hover,
+.btn-place-order:hover,
+.btn-pay-now:hover,
+.btn-track-order-success:hover,
+.btn-auth-submit:hover,
+.btn-view-orders:hover,
+.btn-save-profile:hover,
+.btn-track-active:hover,
+.btn-reorder:hover,
+.btn-close-tracking-full:hover,
+.btn-add-brand-product-to-cart:hover,
+.normal-zoom-btn:hover {
+  transform: scale(1.05) translateY(-2px) !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12) !important;
+}
+
+button:active,
+.btn-filled-indigo:active,
+.btn-outline-orange:active,
+.btn-white:active,
+.btn-submit-landing:active,
+.btn-subscribe:active,
+.btn-place-order:active,
+.btn-pay-now:active,
+.btn-track-order-success:active,
+.btn-auth-submit:active,
+.btn-view-orders:active,
+.btn-save-profile:active,
+.btn-track-active:active,
+.btn-reorder:active,
+.btn-close-tracking-full:active,
+.btn-add-brand-product-to-cart:active,
+.normal-zoom-btn:active {
+  transform: scale(0.98) translateY(0) !important;
 }
