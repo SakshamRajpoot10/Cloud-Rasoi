@@ -118,7 +118,7 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--spacing-24) var(--spacing-40);
+  padding: var(--spacing-16) var(--spacing-40);
   background: rgba(251, 249, 246, 0.95);
   backdrop-filter: blur(8px);
   position: sticky;

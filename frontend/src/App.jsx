@@ -863,7 +863,7 @@ export default function App() {
           }
         }} style={{ cursor: 'pointer' }}>
           <span className="logo-emoji-brand" style={{ fontSize: '28px', marginRight: '8px' }}>🍲</span>
-          <span className="logo-text-brand" style={{ fontFamily: 'var(--font-display)', fontSize: '32px', letterSpacing: '0.05em', color: 'var(--color-deep-indigo)' }}>
+          <span className="logo-text-brand" style={{ fontFamily: 'var(--font-display)', fontSize: '32px', letterSpacing: '0.05em', color: 'var(--color-deep-indigo)', transform: 'translateY(2px)', display: 'inline-block' }}>
             Cloud Rasoi
           </span>
         </div>
