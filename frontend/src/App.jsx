@@ -204,6 +204,81 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
+const signatureDishes = [
+  {
+    id: 1,
+    menuItemId: 1,
+    name: "Butter Paneer Masala",
+    restaurantId: 1,
+    restaurantName: "Spicy Tadka",
+    price: 240,
+    rating: 4.5,
+    isVeg: true,
+    imageName: "butter_paneer.jpg",
+    description: "Rich and creamy cottage cheese cubes cooked in a tomato, butter, and cashew gravy."
+  },
+  {
+    id: 2,
+    menuItemId: 3,
+    name: "Butter Chicken",
+    restaurantId: 1,
+    restaurantName: "Spicy Tadka",
+    price: 290,
+    rating: 4.7,
+    isVeg: false,
+    imageName: "butter_chicken.jpg",
+    description: "Tender tandoori chicken simmered in a smooth, velvety tomato, butter, and cream gravy."
+  },
+  {
+    id: 3,
+    menuItemId: 8,
+    name: "Masala Dosa",
+    restaurantId: 2,
+    restaurantName: "Dosa Express",
+    price: 90,
+    rating: 4.7,
+    isVeg: true,
+    imageName: "masala_dosa.jpg",
+    description: "Crispy rice and lentil crepe stuffed with a spiced mashed potato filling, served with sambar and chutneys."
+  },
+  {
+    id: 4,
+    menuItemId: 13,
+    name: "Chicken Dum Biryani",
+    restaurantId: 3,
+    restaurantName: "Royal Biryani House",
+    price: 290,
+    rating: 4.8,
+    isVeg: false,
+    imageName: "chicken_biryani.jpg",
+    description: "Fragrant basmati rice layered with spiced marinated chicken, slow-cooked in dum style with saffron."
+  },
+  {
+    id: 5,
+    menuItemId: 19,
+    name: "Pani Puri (Golgappa)",
+    restaurantId: 4,
+    restaurantName: "Chaat Corner",
+    price: 50,
+    rating: 4.8,
+    isVeg: true,
+    imageName: "pani_puri.jpg",
+    description: "Crispy hollow puris filled with spicy tamarind water, potatoes, chickpeas, and sweet chutney."
+  },
+  {
+    id: 6,
+    menuItemId: 36,
+    name: "Mishti Doi",
+    restaurantId: 10,
+    restaurantName: "Sweet Nirvana",
+    price: 70,
+    rating: 4.9,
+    isVeg: true,
+    imageName: "gulab_jamun.jpg",
+    description: "Traditional Bengali sweetened yogurt fermented in a clay pot."
+  }
+];
+
 export default function App() {
   // Navigation & View States
   const [currentView, setCurrentView] = useState('home'); 
@@ -506,6 +581,19 @@ export default function App() {
       const isVegVal = item.isVeg !== undefined ? item.isVeg : item.veg;
       return [...prev, { ...item, isVeg: isVegVal, quantity: 1 }];
     });
+  };
+
+  const handleAddItemToCartFromSignature = (dish) => {
+    const item = {
+      id: dish.menuItemId,
+      name: dish.name,
+      price: dish.price,
+      isVeg: dish.isVeg,
+      imageName: dish.imageName,
+      restaurantId: dish.restaurantId
+    };
+    addToCart(item);
+    setIsCartOpen(true);
   };
 
   const removeFromCart = (itemId) => {
@@ -992,7 +1080,7 @@ export default function App() {
             <section id="products" className="products-section">
               <div className="container">
                 <div className="section-header-carousel">
-                  <h2 className="section-title-landing">Signature Products</h2>
+                  <h2 className="section-title-landing">Signature & Most Ordered Dishes</h2>
                   <div className="carousel-controls">
                     <button className="btn-carousel-control" onClick={() => scrollCarousel('left')}><ArrowLeft size={18} /></button>
                     <button className="btn-carousel-control" onClick={() => scrollCarousel('right')}><ArrowRight size={18} /></button>
@@ -1000,15 +1088,22 @@ export default function App() {
                 </div>
 
                 <div className="carousel-container" ref={carouselRef}>
-                  {products.map(product => (
-                    <div key={product.id} className="product-card-landing" onClick={() => setSelectedProduct(product)}>
-                      <div className="product-card-img-wrapper">
-                        <img src={getFoodImage(product.imageName)} alt={product.name} />
+                  {signatureDishes.map(dish => (
+                    <div key={dish.id} className="product-card-landing" onClick={() => setSelectedProduct(dish)}>
+                      <div className="product-card-img-wrapper" style={{ position: 'relative' }}>
+                        <img src={getFoodImage(dish.imageName)} alt={dish.name} />
+                        <span className="rating-badge" style={{ position: 'absolute', top: '12px', right: '12px', zIndex: 10 }}>
+                          {dish.rating} <Star size={12} fill="white" style={{ marginLeft: '2px' }} />
+                        </span>
                       </div>
                       <div className="product-card-info">
-                        <span className="product-card-category">{product.category}</span>
-                        <h3 className="product-card-title">{product.name}</h3>
-                        <p className="product-card-subtitle">{product.subtitle}</p>
+                        <span className="product-card-category" style={{ color: 'var(--color-primary)', fontWeight: 700 }}>
+                          {dish.restaurantName}
+                        </span>
+                        <h3 className="product-card-title">{dish.name}</h3>
+                        <p className="product-card-price" style={{ fontFamily: 'var(--font-ui)', fontSize: '15px', fontWeight: 700, color: 'var(--color-burnt-orange)', marginTop: '4px' }}>
+                          ₹{dish.price}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -2372,7 +2467,7 @@ export default function App() {
         </div>
       )}
 
-      {/* --- Brand Product Info Modal --- */}
+      {/* --- Signature Dish Info Modal --- */}
       {selectedProduct && (
         <div className="modal-overlay" onClick={() => setSelectedProduct(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -2380,30 +2475,57 @@ export default function App() {
             <div className="product-modal-grid">
               <img src={getFoodImage(selectedProduct.imageName)} alt={selectedProduct.name} className="product-modal-img" />
               <div>
-                <span className="product-modal-category">{selectedProduct.category}</span>
-                <h2 className="modal-title">{selectedProduct.name}</h2>
-                <p className="product-modal-subtitle">{selectedProduct.subtitle}</p>
+                <span className="product-modal-category" style={{ color: 'var(--color-burnt-orange)', fontWeight: 700, fontSize: '12px', letterSpacing: '0.1em' }}>
+                  {selectedProduct.restaurantName}
+                </span>
+                <h2 className="modal-title" style={{ marginTop: '4px' }}>{selectedProduct.name}</h2>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '8px 0 16px 0' }}>
+                  <span className="rating-badge">
+                    {selectedProduct.rating} <Star size={12} fill="white" style={{ marginLeft: '2px' }} />
+                  </span>
+                  <span style={{ fontFamily: 'var(--font-ui)', fontWeight: 700, fontSize: '18px', color: 'var(--color-deep-indigo)' }}>
+                    ₹{selectedProduct.price}
+                  </span>
+                  <span className={`veg-indicator-dot ${selectedProduct.isVeg ? 'veg' : 'non-veg'}`} style={{
+                    display: 'inline-block',
+                    width: '10px',
+                    height: '10px',
+                    borderRadius: '50%',
+                    backgroundColor: selectedProduct.isVeg ? '#24963f' : '#d93838'
+                  }} />
+                </div>
                 
-                <div className="product-info-section">
+                <div className="product-info-section" style={{ marginBottom: '24px' }}>
                   <h3>Description</h3>
                   <p>{selectedProduct.description}</p>
                 </div>
-                
-                <div className="product-info-section">
-                  <h3>Organic Ingredients</h3>
-                  <p>{selectedProduct.ingredients || 'Organic raw cashews, water, salt, cultures'}</p>
-                </div>
 
-                <div className="product-info-section">
-                  <h3>Nutritional Information</h3>
-                  <table className="nutrition-table">
-                    <tbody>
-                      <tr><td>Energy</td><td>{selectedProduct.nutritionEnergy || '310 kcal'}</td></tr>
-                      <tr><td>Fats</td><td>{selectedProduct.nutritionFat || '28 g'}</td></tr>
-                      <tr><td>Carbohydrates</td><td>{selectedProduct.nutritionCarbs || '12 g'}</td></tr>
-                      <tr><td>Proteins</td><td>{selectedProduct.nutritionProtein || '7.5 g'}</td></tr>
-                    </tbody>
-                  </table>
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <button 
+                    className="btn-add-brand-product-to-cart" 
+                    style={{ margin: 0, flex: 1 }}
+                    onClick={() => {
+                      handleAddItemToCartFromSignature(selectedProduct);
+                      setSelectedProduct(null);
+                    }}
+                  >
+                    Add to Cart
+                  </button>
+                  <button 
+                    className="btn-view-orders" 
+                    style={{ margin: 0, width: 'auto', padding: '0 20px' }}
+                    onClick={() => {
+                      const rest = restaurants.find(r => r.id === selectedProduct.restaurantId);
+                      if (rest) {
+                        handleSelectRestaurant(rest);
+                      } else {
+                        setCurrentView('explore');
+                      }
+                      setSelectedProduct(null);
+                    }}
+                  >
+                    View Kitchen Menu
+                  </button>
                 </div>
               </div>
             </div>
