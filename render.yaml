@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: cloud-rasoi-backend
+    env: docker
+    plan: free
+    dockerfilePath: backend/Dockerfile
+    envVars:
+      - key: SPRING_SQL_INIT_MODE
+        value: always
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update

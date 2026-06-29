@@ -1,3 +1,9 @@
+/**
+ * Cloud Rasoi 🍲
+ * Developed by Saksham Rajpoot (https://github.com/SakshamRajpoot10)
+ * All Rights Reserved. © 2026
+ */
+
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   ChevronRight, ArrowLeft, ArrowRight, Heart, MessageCircle, Share2, Bookmark, 
@@ -2614,7 +2620,7 @@ export default function App() {
             </div>
           </div>
           <div className="footer-bottom-text">
-            © {new Date().getFullYear()} Cloud Rasoi. All Rights Reserved. Made with love for healthy dining.
+            © {new Date().getFullYear()} Cloud Rasoi. All Rights Reserved. | Developed by Saksham Rajpoot
           </div>
         </div>
       </footer>
