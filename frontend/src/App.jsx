@@ -389,7 +389,7 @@ export default function App() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Load User from LocalStorage on startup
+  // Load User from LocalStorage on startup, clear hash, and scroll to top
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
@@ -398,6 +398,13 @@ export default function App() {
       setCustomerName(parsed.username);
       setDeliveryAddress(parsed.address || '');
     }
+    
+    // Clear hash on refresh to prevent auto-scrolling to sections
+    if (window.location.hash) {
+      window.history.replaceState(null, null, ' ');
+    }
+    // Force scroll to top on load/refresh
+    window.scrollTo(0, 0);
   }, []);
 
   // Handle smooth scroll on hash changes or view changes
