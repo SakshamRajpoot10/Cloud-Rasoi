@@ -218,7 +218,7 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
   return d.toFixed(1);
 };
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || `${API_BASE_URL}`;
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
 export default function App() {
   // Navigation & View States
